@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Employee
 
+## this is DRF2
 
 class EmployeeSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=30)
