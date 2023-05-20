@@ -9,15 +9,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def employeeListView(request):
     if request.method == 'GET':
         employees = Employee.objects.all()
         serializer = EmployeeSerializer(employees, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        jsonData = JSONParser().parse(request)
-        serializer = EmployeeSerializer(data=jsonData)
+        serializer = EmployeeSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -47,6 +46,7 @@ def EmployeeDetailView(request, pk):
             return Response(serializer.errors)
 
 
+@api_view(['GET','POST'])
 def UserListView(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
